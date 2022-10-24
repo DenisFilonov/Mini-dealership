@@ -49,6 +49,16 @@ namespace Temat_06pd
         }
         public Car(string name, string model, string typeofveh, string gearbox, string color, float price, int maxspeed, int productionyear, string carclass)
         {
+            if (String.IsNullOrWhiteSpace(name)) throw new Exception("The name field can't be empty!");
+            if (String.IsNullOrWhiteSpace(model)) throw new Exception("The model field can't be empty!");
+            if (String.IsNullOrWhiteSpace(typeofveh)) throw new Exception("The type of vehicle field can't be empty!");
+            if (String.IsNullOrWhiteSpace(gearbox)) throw new Exception("The gearbox field can't be empty!");
+            if (String.IsNullOrWhiteSpace(color)) throw new Exception("The color field can't be empty!");
+            if (price == 0 || price < 0) throw new Exception("The price field can't be null, zero or less than zero!");
+            if (maxspeed == 0 || maxspeed < 0 || maxspeed > 500) throw new Exception("The maxspeed field can't be zero or less than zero or more than five hundred!");
+            if (productionyear < 1999 || productionyear > 2999 || productionyear == 0 || productionyear < 0) throw new Exception("The production year field set wrong, check input data!");
+            if (String.IsNullOrWhiteSpace(carclass) || carclass.Length > 1) throw new Exception("The carclass field can't be empty, or more than one character!");
+
             _name = name;
             _model = model;
             _typeofveh = typeofveh;
@@ -99,7 +109,16 @@ namespace Temat_06pd
         public void SetGearBox(string gearbox)
         {
             if (String.IsNullOrWhiteSpace(gearbox)) throw new Exception("The gearbox field can't be empty!");
-            _gearbox = gearbox;
+            if (IsCorrectTypeOfTransmission())
+            {
+                _gearbox = gearbox;
+            }
+            else
+            {
+                Console.WriteLine("\nUndefinied car transmission! Please, check the input data.");
+                GearBoxes();
+            }
+
         }
         public void SetColor(string color)
         {
